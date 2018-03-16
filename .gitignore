@@ -1,4 +1,4 @@
-################################################################
+﻿################################################################
 # gitignore/JetBrains.gitignore at master · github/gitignore
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
 ################################################################
@@ -72,4 +72,5 @@ fabric.properties
 ################################################################
 # yo-kondo original
 ################################################################
-/src/zzz/
+/config.toml
+/vendor/
