@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/BurntSushi/toml"
 )
 
@@ -14,10 +12,7 @@ type Config struct {
 }
 
 // 設定ファイルを取得する。
-func getConfig(conf *Config) {
+func getConfig(conf *Config) error {
 	_, err := toml.DecodeFile("config.toml", &conf)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	return err
 }
