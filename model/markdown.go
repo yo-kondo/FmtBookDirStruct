@@ -1,4 +1,4 @@
-package main
+package model
 
 import (
 	"bufio"
@@ -11,9 +11,11 @@ import (
 )
 
 // READMEのINDEXリスト
-type readmeIndexList struct {
+type ReadmeIndexList struct {
 	// 読了日
 	readingDate time.Time
+	// ISBN13 > ISBN10 > ASIN
+	isbn string
 	// 本のタイトル
 	bookTitle string
 	// Markdownへのリンク
@@ -26,19 +28,20 @@ type readmeIndexList struct {
 const datetimeLayout = "2006/01/02 15:04:05"
 
 // readmeIndexListの文字列を返す。
-func (r *readmeIndexList) String() string {
-	return fmt.Sprintf("readingDate=[%s], bookTitle=[%s], linkMarkdown=[%s], author=[%s]",
-		r.readingDate.Format(datetimeLayout), r.bookTitle, r.linkMarkdown, r.author)
+func (r *ReadmeIndexList) String() string {
+	return fmt.Sprintf("readingDate=[%s], isbn=[%s] bookTitle=[%s], linkMarkdown=[%s], author=[%s]",
+		r.readingDate.Format(datetimeLayout), r.isbn, r.bookTitle, r.linkMarkdown, r.author)
 }
 
 // READMEファイルを読み込み、構造体を返す。
-func loadReadme(repositoryPath string) ([]readmeIndexList, error) {
-	rtnList := make([]readmeIndexList, 0)
+func LoadReadme(repositoryPath string) ([]ReadmeIndexList, error) {
+	rtnList := make([]ReadmeIndexList, 0)
 
 	file, err := os.Open(repositoryPath + "\\README.md")
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
 
 	sc := bufio.NewScanner(file)
 
@@ -67,13 +70,62 @@ func loadReadme(repositoryPath string) ([]readmeIndexList, error) {
 		link := string(reg3.Find([]byte(sp[1])))
 		rLink := []rune(link)
 
-		readme := readmeIndexList{
+		readme := ReadmeIndexList{
 			t,
+			"",
 			string(rTitle[1 : len(rTitle)-1]),
 			string(rLink[1 : len(rLink)-1]),
 			sp[2],
 		}
+		// ISBN取得
+		isbn, err := setIsbn(readme, repositoryPath)
+		if err != nil {
+			return nil, err
+		}
+		readme.isbn = isbn
+
 		rtnList = append(rtnList, readme)
 	}
+
 	return rtnList, nil
+}
+
+// リンクからMarkdownを探索し、Markdownの中からISBNを取得する。
+// 取得順 ISBN13 > ISBN10 > ASIN
+func setIsbn(r ReadmeIndexList, repositoryPath string) (string, error) {
+
+	path := repositoryPath + "\\" + strings.Replace(r.linkMarkdown, "/", "\\", -1)
+	file, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	sc := bufio.NewScanner(file)
+
+	isbn13 := ""
+	isbn10 := ""
+	asin := ""
+	for sc.Scan() {
+		line := sc.Text()
+
+		if strings.Contains(line, "ISBN-13") {
+			sp := strings.Split(line, "|")
+			isbn13 = sp[2]
+		}
+		if strings.Contains(line, "ISBN-10") {
+			isbn10 = strings.Split(line, "|")[2]
+		}
+		if strings.Contains(line, "ASIN") {
+			asin = strings.Split(line, "|")[2]
+		}
+	}
+
+	if isbn13 != "" && isbn13 != "－" {
+		return isbn13, nil
+	}
+	if isbn10 != "" && isbn10 != "－" {
+		return isbn10, nil
+	}
+	return asin, nil
 }
