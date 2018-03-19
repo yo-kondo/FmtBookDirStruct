@@ -1,4 +1,4 @@
-package logic
+package lib
 
 import (
 	"github.com/BurntSushi/toml"
