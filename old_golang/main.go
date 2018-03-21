@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/yo-kondo/FmtBookDirStruct/lib"
+	"github.com/yo-kondo/fmtBookDirStruct/lib"
 )
 
 // エントリポイント
-func main() {
+func fmtBookDirStruct() {
 	// 設定ファイル取得
 	var conf lib.Config
 	err := lib.GetConfig(&conf)
@@ -29,6 +29,10 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+
+	// バッククォートで括ると、ヒアドキュメント（raw string literal）になる。
+	// http://nisenabe.hatenablog.com/entry/2013/06/09/155207
+	// 下記ではバックスラッシュをエスケープ記号として使いたくないためバッククォートを使用している。
 
 	// "1. yyyy/mm/dd - ["の行を取得対象とする
 	reg1 := regexp.MustCompile(`1. 20[0-9]{2}/[0-2]{2}/[0-9]{2} - \[`)

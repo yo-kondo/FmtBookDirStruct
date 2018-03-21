@@ -24,13 +24,16 @@ type ReadmeIndexList struct {
 }
 
 // 日時のフォーマット（Goでは"yyyy/MM/dd HH:mm:ss"ではなく、"2016/01/02 15:04:05"と書く。
+// http://kakakakakku.hatenablog.com/entry/2016/03/28/001145
 const datetimeLayout = "2006/01/02 15:04:05"
 
 // readmeIndexListの文字列を返す。
 func (r *ReadmeIndexList) String() string {
 	return fmt.Sprintf(
-		"ReadingDate=[%s], ReadingYear=[%s], Isbn=[%s], BookTitle=[%s], OldLinkMarkdown=[%s], NewLinkMarkdown=[%s], Author=[%s]",
-		r.ReadingDate.Format(datetimeLayout), r.ReadingYear, r.Isbn, r.BookTitle, r.OldLinkMarkdown, r.NewLinkMarkdown, r.Author)
+		"ReadingDate=[%s], ReadingYear=[%s], Isbn=[%s], BookTitle=[%s],"+
+			" OldLinkMarkdown=[%s], NewLinkMarkdown=[%s], Author=[%s]",
+		r.ReadingDate.Format(datetimeLayout), r.ReadingYear, r.Isbn, r.BookTitle,
+		r.OldLinkMarkdown, r.NewLinkMarkdown, r.Author)
 }
 
 // ReadmeIndexListにISBNをセットする。

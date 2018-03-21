@@ -1,4 +1,4 @@
-# FmtBookDirStruct
+# fmtBookDirStruct
 
 `Memo_Book`リポジトリのディレクトリ構成を修正します。  
 ローカルにクローンしたリポジトリの修正を行います。  
@@ -72,11 +72,13 @@ README.mdの中身は以下のようになっています。
     ```
 
 ## 設定ファイル
-TOMLを使用します。（まだバージョンが1になっていないので、大きく変わる可能性があります）  
-設定ファイルは実行ファイルと同じディレクトリに、config.tomlという名前で配置してください。  
+jsonを使用します。  
+設定ファイルは実行ファイルと同じディレクトリに、config.jsonという名前で配置してください。  
 
 記述例
-```toml
-# リポジトリのディレクトリパス
-RepositoryPath = "C:\\repo"
+RepositoryPath : リポジトリのディレクトリパス
+```json
+{
+  "RepositoryPath" : "C:\\repo"
+}
 ```
