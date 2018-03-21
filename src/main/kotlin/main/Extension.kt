@@ -1,5 +1,6 @@
 package main
 
+import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -28,6 +29,27 @@ fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
             LocalDate.parse(this, it)
         } catch (e: DateTimeParseException) {
             return null
+        }
+    }
+}
+
+/**
+ * LocalDate型を文字列に変換する拡張関数
+ * @param pattern 日付の書式
+ * @return 文字列に変換した日付
+ */
+fun LocalDate.toStringEx(pattern: String = "uuuu/MM/dd"): String {
+    val format = try {
+        DateTimeFormatter.ofPattern(pattern).withResolverStyle(ResolverStyle.STRICT)
+    } catch (e: IllegalArgumentException) {
+        null
+    }
+
+    return format.let {
+        try {
+            this.format(it)
+        } catch (e: DateTimeException) {
+            return ""
         }
     }
 }

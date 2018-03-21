@@ -1,4 +1,4 @@
-# fmtBookDirStruct
+# FmtBookDirStruct
 
 `Memo_Book`リポジトリのディレクトリ構成を修正します。  
 ローカルにクローンしたリポジトリの修正を行います。  
@@ -75,7 +75,7 @@ README.mdの中身は以下のようになっています。
 jsonを使用します。  
 設定ファイルは実行ファイルと同じディレクトリに、config.jsonという名前で配置してください。  
 
-記述例
+記述例  
 RepositoryPath : リポジトリのディレクトリパス
 ```json
 {
