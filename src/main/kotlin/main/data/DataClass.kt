@@ -5,14 +5,14 @@ import java.time.LocalDate
 /**
  * 設定ファイルのクラス
  */
-data class ConfigData(
+internal data class ConfigData(
         /** リポジトリのディレクトリパス */
         val repositoryPath: String)
 
 /**
  * READMEのINDEXクラス
  */
-data class ReadmeIndexData(
+internal data class ReadmeIndexData(
         /** 読了日 */
         var readingData: LocalDate,
         /** 読了日（年） */

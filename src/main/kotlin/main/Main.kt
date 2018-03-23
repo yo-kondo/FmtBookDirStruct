@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
  * 設定ファイルを読み込んで返します。
  * @return 設定ファイルのデータクラス
  */
-fun readConfig(): ConfigData {
+private fun readConfig(): ConfigData {
     // https://qiita.com/devneko/items/93ee1212ce189f910891
     val source = File("config.json").readText(Charsets.UTF_8)
     return Gson().fromJson(source, ConfigData::class.java)
@@ -34,7 +34,7 @@ fun readConfig(): ConfigData {
  * @param repPath リポジトリのディレクトリパス
  * @return ReadmeIndexDataのリスト
  */
-fun readReadme(repPath: String): MutableList<ReadmeIndexData> {
+private fun readReadme(repPath: String): MutableList<ReadmeIndexData> {
     val readmeFile: MutableList<String> = mutableListOf()
 
     // Fileクラスの拡張関数forEachLineで行単位で取得
@@ -96,7 +96,7 @@ fun readReadme(repPath: String): MutableList<ReadmeIndexData> {
  * @param markdownLink ISBN取得対象のMarkdownへのリンク
  * @return ISBN。優先度は、ISBN13 > ISBN10 > ASIN
  */
-fun getIsbn(repPath: String, markdownLink: String): String {
+private fun getIsbn(repPath: String, markdownLink: String): String {
 
     val markdownFile: MutableList<String> = mutableListOf()
     File("$repPath/$markdownLink")
@@ -133,7 +133,7 @@ fun getIsbn(repPath: String, markdownLink: String): String {
  * @param repPath リポジトリのディレクトリパス
  * @param readmeList ReadmeIndexDataのリスト
  */
-fun copyMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
+private fun copyMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
     for (m in readmeList) {
         val linkSp = m.oldLinkMarkdown.split("/")
         val sourcePath =
@@ -149,7 +149,7 @@ fun copyMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
  * ReadmeIndexDataのnewLinkMarkdownを追加します。
  * @param readmeList ReadmeIndexDataのリスト
  */
-fun addNewLinkMarkdown(readmeList: MutableList<ReadmeIndexData>) {
+private fun addNewLinkMarkdown(readmeList: MutableList<ReadmeIndexData>) {
     for (m in readmeList) {
         val fileName = m.oldLinkMarkdown.split("/").last()
         m.newLinkMarkdown = "md/${m.readingYear}/${m.isbn}/$fileName"
@@ -162,7 +162,7 @@ fun addNewLinkMarkdown(readmeList: MutableList<ReadmeIndexData>) {
  * @param repPath リポジトリのディレクトリパス
  * @return ReadmeIndexDataのリスト
  */
-fun writeNewReadmeIndex(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
+private fun writeNewReadmeIndex(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
     val inFile = File("$repPath/newREADME_IndexOnly.md")
 
     // 先にファイルを消す
@@ -181,7 +181,7 @@ fun writeNewReadmeIndex(repPath: String, readmeList: MutableList<ReadmeIndexData
  * @param repPath リポジトリのディレクトリパス
  * @return ReadmeIndexDataのリスト
  */
-fun deleteOldMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
+private fun deleteOldMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
     for (m in readmeList) {
         val sp = m.oldLinkMarkdown.split("/")
         val delFile = File("$repPath/${sp[0]}/${sp[1]}")

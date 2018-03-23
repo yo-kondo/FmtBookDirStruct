@@ -11,7 +11,7 @@ import java.time.format.ResolverStyle
  * @param pattern 日付の書式
  * @return LocalDateに変換した日付
  */
-fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
+internal fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
     // https://qiita.com/emboss369/items/5a3ddea301cbf79d971a
 
     // Date and Time API には、LocalDate、LocalTime、LocalDateTime などに分かれています。
@@ -38,7 +38,7 @@ fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
  * @param pattern 日付の書式
  * @return 文字列に変換した日付
  */
-fun LocalDate.toStringEx(pattern: String = "uuuu/MM/dd"): String {
+internal fun LocalDate.toStringEx(pattern: String = "uuuu/MM/dd"): String {
     val format = try {
         DateTimeFormatter.ofPattern(pattern).withResolverStyle(ResolverStyle.STRICT)
     } catch (e: IllegalArgumentException) {
