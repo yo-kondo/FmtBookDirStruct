@@ -7,7 +7,6 @@ import java.io.File
 
 /**
  * エントリポイント
- * @param args コマンドライン引数
  */
 fun main(args: Array<String>) {
     val conf = readConfig()
@@ -32,7 +31,6 @@ private fun readConfig(): ConfigData {
 /**
  * READMEファイルを読み込んでReadmeIndexDataのリストを返します。
  * @param repPath リポジトリのディレクトリパス
- * @return ReadmeIndexDataのリスト
  */
 private fun readReadme(repPath: String): MutableList<ReadmeIndexData> {
     val readmeFile: MutableList<String> = mutableListOf()
@@ -91,10 +89,9 @@ private fun readReadme(repPath: String): MutableList<ReadmeIndexData> {
 }
 
 /**
- * ISBNを取得します。
+ * ISBNを取得します。優先度は、ISBN13 > ISBN10 > ASINです。
  * @param repPath 設定ファイル
  * @param markdownLink ISBN取得対象のMarkdownへのリンク
- * @return ISBN。優先度は、ISBN13 > ISBN10 > ASIN
  */
 private fun getIsbn(repPath: String, markdownLink: String): String {
 
@@ -160,7 +157,7 @@ private fun addNewLinkMarkdown(readmeList: MutableList<ReadmeIndexData>) {
  * 新しいリンクに変更したREADMEファイルを作成します。
  * READMEファイルのINDEXのみ記載したファイルを作成します。
  * @param repPath リポジトリのディレクトリパス
- * @return ReadmeIndexDataのリスト
+ * @param readmeList ReadmeIndexDataのリスト
  */
 private fun writeNewReadmeIndex(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
     val inFile = File("$repPath/newREADME_IndexOnly.md")
@@ -179,7 +176,7 @@ private fun writeNewReadmeIndex(repPath: String, readmeList: MutableList<ReadmeI
 /**
  * 古いMarkdownファイルを削除します。
  * @param repPath リポジトリのディレクトリパス
- * @return ReadmeIndexDataのリスト
+ * @param readmeList ReadmeIndexDataのリスト
  */
 private fun deleteOldMarkdown(repPath: String, readmeList: MutableList<ReadmeIndexData>) {
     for (m in readmeList) {

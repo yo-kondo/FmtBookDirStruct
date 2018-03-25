@@ -9,7 +9,6 @@ import java.time.format.ResolverStyle
 /**
  * 文字列をLocalDate型に変換する拡張関数
  * @param pattern 日付の書式
- * @return LocalDateに変換した日付
  */
 internal fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
     // https://qiita.com/emboss369/items/5a3ddea301cbf79d971a
@@ -36,7 +35,6 @@ internal fun String.toDate(pattern: String = "uuuu/MM/dd"): LocalDate? {
 /**
  * LocalDate型を文字列に変換する拡張関数
  * @param pattern 日付の書式
- * @return 文字列に変換した日付
  */
 internal fun LocalDate.toStringEx(pattern: String = "uuuu/MM/dd"): String {
     val format = try {

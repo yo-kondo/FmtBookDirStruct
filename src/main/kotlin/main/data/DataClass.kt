@@ -7,7 +7,8 @@ import java.time.LocalDate
  */
 internal data class ConfigData(
         /** リポジトリのディレクトリパス */
-        val repositoryPath: String)
+        val repositoryPath: String
+)
 
 /**
  * READMEのINDEXクラス
@@ -26,4 +27,5 @@ internal data class ReadmeIndexData(
         /** Markdownへのリンク（新） */
         var newLinkMarkdown: String,
         /** 著者 */
-        var author: String)
+        var author: String
+)
