@@ -1,8 +1,6 @@
-package main
+package fmt.book.dir.struct
 
 import com.google.gson.Gson
-import main.data.ConfigData
-import main.data.ReadmeIndexData
 import java.io.File
 
 /**

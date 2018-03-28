@@ -1,4 +1,4 @@
-package main.data
+package fmt.book.dir.struct
 
 import java.time.LocalDate
 
